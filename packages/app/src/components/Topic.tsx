@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import StyledTopic from './styles/Topic';
+import StyledTopic from '../styles/Topic';
 
 type Props = {
   active: boolean;

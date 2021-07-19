@@ -11,7 +11,7 @@ export const resultItemDetails = css`
 	}
 `;
 
-export const resultListContainer = css`
+export const resultListWrapper = css`
 	margin-top: 60px;
 	${queries.xLarge`
 		margin-top: 170px;
@@ -19,6 +19,9 @@ export const resultListContainer = css`
 	${queries.medium`
 		margin-top: 220px;
 	`};
+`;
+
+export const resultListContainer = css`
 	.result-list-container {
 		display: flex;
 		flex-wrap: wrap;

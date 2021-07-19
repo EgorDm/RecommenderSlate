@@ -1,10 +1,10 @@
-import { DataSearch, ReactiveBase } from '@appbaseio/reactivesearch';
+import { DataSearch, ReactiveBase, SelectedFilters } from '@appbaseio/reactivesearch';
 import React from 'react';
 import Header from './components/Header';
 import Results from './components/Results';
-import Container, { appContainer, dataSearchContainer, resultsContainer } from './components/styles/Container';
-import Flex, { FlexChild } from './components/styles/Flex';
-import theme from './components/styles/theme';
+import Container, { appContainer, dataSearchContainer, resultsContainer } from './styles/Container';
+import Flex, { FlexChild } from './styles/Flex';
+import theme from './styles/theme';
 
 function App() {
   const [topics, setTopics] = React.useState<string[]>([])
@@ -25,9 +25,9 @@ function App() {
           <Header currentTopics={topics} setTopics={setTopics} />
           <FlexChild className={resultsContainer}>
             <DataSearch
-              componentId="repo"
-              dataField={['name', 'description', 'name.keyword', 'fullname', 'owner', 'topics']}
-              placeholder="Search Repos"
+              componentId="query"
+              dataField={ ['title', 'languages', 'tags', 'artists', 'groups', 'num_pages']}
+              placeholder="Search Documents"
               iconPosition="left"
               autosuggest={false}
               URLParams

@@ -1,48 +1,68 @@
 {
-  "name": "rewa",
+  "name": "toprec",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {
-    "@appbaseio/reactivesearch": "^3.21.0",
-    "@emotion/css": "^11.1.3",
-    "@emotion/react": "^11.4.0",
-    "@emotion/styled": "^11.3.0",
-    "elasticsearch": "^16.7.2",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-elasticsearch": "^3.1.0",
-    "react-scripts": "4.0.3",
-    "typescript": "^4.3.5"
+  "scripts": {
+    "format": "syncpack format && syncpack set-semver-ranges && yarn workspace @toprec/app format",
+    "lint": "yarn workspace @toprec/app lint",
+    "postinstall": "patch-package && syncpack format && syncpack set-semver-ranges",
+    "watch": "concurrently \"npm:watch:app\" \"npm:watch:libs\"",
+    "watch:app": "yarn workspace @toprec/app start",
+    "watch:libs": "yarn workspace @appbaseio/reactivecore start"
   },
   "devDependencies": {
-    "@types/elasticsearch": "^5.0.38",
-    "@types/jest": "^26.0.24",
-    "@types/node": "^12.20.16",
-    "@types/react": "^17.0.14",
-    "@types/react-dom": "^17.0.9"
+    "@typescript-eslint/eslint-plugin": "4.28.2",
+    "@typescript-eslint/parser": "4.28.2",
+    "concurrently": "6.2.0",
+    "eslint": "7.30.0",
+    "eslint-config-prettier": "8.3.0",
+    "eslint-config-standard": "16.0.3",
+    "eslint-plugin-import": "2.23.4",
+    "eslint-plugin-node": "11.1.0",
+    "eslint-plugin-promise": "5.1.0",
+    "eslint-plugin-react": "7.24.0",
+    "husky": "7.0.1",
+    "nodemon": "2.0.12",
+    "patch-package": "6.4.7",
+    "prettier": "2.3.2",
+    "syncpack": "5.7.11",
+    "typescript": "4.3.5"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn workspace format && yarn workspace lint"
+    }
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
+  "syncpack": {
+    "dev": true,
+    "peer": true,
+    "prod": true,
+    "semverRange": "",
+    "sortAz": [
+      "dependencies",
+      "devDependencies",
+      "peerDependencies",
+      "scripts"
     ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
+    "sortFirst": [
+      "name",
+      "version",
+      "private",
+      "scripts",
+      "dependencies",
+      "devDependencies",
+      "peerDependencies"
+    ],
+    "source": [
+      "package.json",
+      "packages/*/package.json"
+    ],
+    "versionGroups": []
+  },
+  "workspaces": {
+    "packages": [
+      "packages/*",
+      "libs/*"
     ]
   }
 }

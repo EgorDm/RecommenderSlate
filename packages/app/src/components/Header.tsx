@@ -1,7 +1,7 @@
 import React from 'react';
 import SearchFilters from './SearchFilters';
-import { ToggleButton } from './styles/Button';
-import Navbar, { title } from './styles/Navbar';
+import { ToggleButton } from '../styles/Button';
+import Navbar, { title } from '../styles/Navbar';
 
 type Props = {
   currentTopics: string[],
@@ -17,7 +17,7 @@ const Header = ({
 
   return (
     <Navbar full={visible}>
-      <div className={title}>GitXplore</div>
+      <div className={title}>Recommender</div>
       <ToggleButton onClick={toggleVisibility}>Toggle Filters</ToggleButton>
       <SearchFilters {...props} visible={visible}/>
     </Navbar>
