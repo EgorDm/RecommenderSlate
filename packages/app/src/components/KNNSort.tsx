@@ -8,6 +8,7 @@ import Input from "../styles/Input";
 import InputWrapper from "../styles/InputWrapper";
 import SearchSvg from "../styles/SearchSvg";
 import Title from "../styles/Title";
+import {mean, divide, norm} from 'mathjs'
 
 type CommonProps = {
   title: string
@@ -55,14 +56,20 @@ const KNNSortInner = ({ setLocalValue, localValue, value, setQuery, data, ...pro
   const [ input, setInput ] = useState<string>('')
   const loadedDocuments = data.map((item) => item._id);
 
-  // Initialize value to default value (or one form url)
-  useEffect(() => {
+  const setValue = useCallback((value) => {
     setLocalValue(value)
+    setQuery({value})
   }, [])
+
+  // Initialize value to default value (or one form url)
+  useDeepCompareEffect(() => {
+    setValue(value)
+  }, [value])
 
   // Loaded documents are updates. Thus update the results query
   useDeepCompareEffect(() => {
     const topics = data.map((item) => item.topics);
+    const topic = topics.length > 0 ? divide(mean(topics, 0), norm(mean(topics, 0), 2)) : null;
     setQuery({
       query: (query) => loadedDocuments.length === 0 ? query : ({
         script_score: {
@@ -72,13 +79,13 @@ const KNNSortInner = ({ setLocalValue, localValue, value, setQuery, data, ...pro
             source: "knn_score",
             params: {
               field: "topics",
-              query_value: topics[0],
+              query_value: topic,
               space_type: "l2"
             }
           }
         }
       }),
-      value: localValue
+      value: value
     })
   }, [ loadedDocuments ])
 
@@ -87,15 +94,15 @@ const KNNSortInner = ({ setLocalValue, localValue, value, setQuery, data, ...pro
       <Checkbox
         id={`${props.componentId}-${id}`}
         checked={true}
-        onChange={() => setLocalValue((localValue || []).filter(item => item !== id))}/>
+        onChange={() => setValue((value || []).filter(item => item !== id))}/>
       <label htmlFor={`${props.componentId}-${id}`}>
         {title}
       </label>
     </li>
-  ), [])
+  ), [value])
 
   const onSearch = useCallback(() => {
-    if (input && parseInt(input)) setLocalValue([ ...(localValue || []), parseInt(input) ])
+    if (input && parseInt(input)) setValue([ ...(value || []), parseInt(input) ])
     setInput('');
   }, [ input ])
 

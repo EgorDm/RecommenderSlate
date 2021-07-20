@@ -17,7 +17,7 @@ const renderResultStats = ({ numberOfResults, time }) => (
 );
 
 const onData = (item, currentTopics, toggleTopic) => (
-  <ResultCard href={item.title} key={item._id}>
+  <ResultCard href={item.id} key={item._id}>
     <ResultCard.Image src={''}/>
     <ResultCard.Title>
       {item.title || ' '}
