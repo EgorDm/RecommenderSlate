@@ -52,7 +52,7 @@ const Input = styled.input<{
           `};
 
   ${props =>
-          // for clear icon
+          // for clearQueue icon
           props.showClear
           && css`
             padding-right: 36px;
@@ -64,7 +64,7 @@ const Input = styled.input<{
             padding-right: 36px;
           `};
   ${props =>
-          // for clear icon with search icon
+          // for clearQueue icon with search icon
           props.showClear
           && props.showIcon
           && props.iconPosition === 'right'
@@ -72,7 +72,7 @@ const Input = styled.input<{
             padding-right: 66px;
           `};
   ${props =>
-          // for voice search icon with clear icon
+          // for voice search icon with clearQueue icon
           props.showVoiceSearch
           && props.showIcon
           && css`
@@ -87,7 +87,7 @@ const Input = styled.input<{
             padding-right: 66px;
           `};
   ${props =>
-          // for clear icon with search icon and voice search
+          // for clearQueue icon with search icon and voice search
           props.showClear
           && props.showIcon
           && props.showVoiceSearch

@@ -1,6 +1,8 @@
 import { ReactiveComponent } from "@appbaseio/reactivesearch"
 import React, { useCallback, useEffect, useState } from "react"
 import { useDeepCompareEffect } from "use-deep-compare"
+import { useReduxAction, useReduxState } from "../hooks";
+import { KNNActions, selectKnnQueue } from "../store";
 import { Checkbox, UL } from "../styles/Checkbox";
 import IconGroup from "../styles/IconGroup";
 import IconWrapper from "../styles/IconWrapper";
@@ -65,6 +67,16 @@ const KNNSortInner = ({ setLocalValue, localValue, value, setQuery, data, ...pro
   useDeepCompareEffect(() => {
     setValue(value)
   }, [value])
+
+  // Added items from the global queue
+  const clearKnnQueue = useReduxAction(KNNActions.clearQueue);
+  const queue = useReduxState(selectKnnQueue);
+  useDeepCompareEffect(() => {
+    if(queue.length > 0) {
+      setValue([...(value || []), ...queue]);
+      clearKnnQueue();
+    }
+  }, [queue])
 
   // Loaded documents are updates. Thus update the results query
   useDeepCompareEffect(() => {
