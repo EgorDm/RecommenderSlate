@@ -2,8 +2,8 @@ import { css } from "@emotion/css";
 import React from 'react';
 import { ReactiveList, ResultCard, SelectedFilters } from '@appbaseio/reactivesearch';
 import PropTypes from 'prop-types';
-import { useReduxAction } from "../hooks";
-import { KNNActions } from "../store";
+import { useReduxAction } from "../../hooks";
+import { KNNActions } from "../../store";
 
 import { resultListContainer, resultListWrapper } from '../styles/ResultItem';
 import Flex from '../styles/Flex';

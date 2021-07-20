@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import theme from "./theme";
+import theme from "../../components/theme";
 
 const IconWrapper = styled.div`
 	display: flex;

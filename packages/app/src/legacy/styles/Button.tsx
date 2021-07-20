@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { css } from '@emotion/css';
 import { queries } from './mediaQueries';
-import theme from './theme';
+import theme from '../../components/theme';
 
 const button = css`
 	cursor: pointer;

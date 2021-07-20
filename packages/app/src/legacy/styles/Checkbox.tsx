@@ -1,7 +1,7 @@
 import { css } from '@emotion/css';
 import styled from '@emotion/styled';
 import { lighten } from "polished";
-import theme from "./theme";
+import theme from "../../components/theme";
 
 const item = {
 	width: '16px',

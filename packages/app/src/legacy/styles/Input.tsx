@@ -1,6 +1,6 @@
 import { css } from '@emotion/core';
 import styled from '@emotion/styled';
-import theme from "./theme";
+import theme from "../../components/theme";
 
 const alertBorder = css`
   border: 1px solid ${theme.colors.alertColor};

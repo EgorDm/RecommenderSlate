@@ -1,8 +1,8 @@
 import { ReactiveComponent } from "@appbaseio/reactivesearch"
 import React, { useCallback, useEffect, useState } from "react"
 import { useDeepCompareEffect } from "use-deep-compare"
-import { useReduxAction, useReduxState } from "../hooks";
-import { KNNActions, selectKnnQueue } from "../store";
+import { useReduxAction, useReduxState } from "../../hooks";
+import { KNNActions, selectKnnQueue } from "../../store";
 import { Checkbox, UL } from "../styles/Checkbox";
 import IconGroup from "../styles/IconGroup";
 import IconWrapper from "../styles/IconWrapper";

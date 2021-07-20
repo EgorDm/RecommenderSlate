@@ -3,8 +3,11 @@ const theme = {
     fontFamily: 'Raleway, Helvetica, sans-serif',
   },
   colors: {
+    backgroundColor: '#181a1b',
+    surfaceColor: '#0c0e12',
+
+
     textColor: '#fff',
-    backgroundColor: '#212121',
     primaryTextColor: '#fff',
     primaryColor: '#2196F3',
     titleColor: '#fff',

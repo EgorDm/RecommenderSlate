@@ -1,7 +1,7 @@
 import { css } from '@emotion/css';
 import styled from '@emotion/styled';
 
-import theme from './theme';
+import theme from '../../components/theme';
 
 const Topic = styled.div<{active: boolean}>`
 	background: ${({ active }) => (active ? theme.colors.primaryColor : theme.colors.secondaryColor)};

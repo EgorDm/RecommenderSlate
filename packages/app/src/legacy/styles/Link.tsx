@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { css } from '@emotion/css';
 
-import theme from './theme';
+import theme from '../../components/theme';
 
 const Link = styled.a`
 	cursor: pointer;

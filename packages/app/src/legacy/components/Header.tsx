@@ -4,8 +4,6 @@ import { ToggleButton } from '../styles/Button';
 import Navbar, { title } from '../styles/Navbar';
 
 type Props = {
-  currentTopics: string[],
-  setTopics: (topics: string[]) => void;
 }
 
 const Header = ({

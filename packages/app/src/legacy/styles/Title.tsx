@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import theme from "./theme";
+import theme from "../../components/theme";
 
 const Title = styled.h2`
 	margin: 0 0 8px;

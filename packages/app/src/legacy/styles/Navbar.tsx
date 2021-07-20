@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { css } from '@emotion/css';
 
 import { queries } from './mediaQueries';
-import theme from './theme';
+import theme from '../../components/theme';
 
 export const title = css`
 	color: white;
