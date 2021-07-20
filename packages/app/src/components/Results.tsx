@@ -36,10 +36,9 @@ const Results = ({ toggleTopic, currentTopics }) => (
       dataField="name"
       renderItem={data => onData(data, currentTopics, toggleTopic)}
       renderResultStats={renderResultStats}
-      excludeFields={['topics']}
       react={{
         nest: [
-          'nndocs',
+          'knn_sim',
           {and: [ 'title', 'languages', 'tags', 'artists', 'groups', 'num_pages' ]},
         ],
       } as any}

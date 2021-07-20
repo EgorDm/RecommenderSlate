@@ -9,7 +9,7 @@ import {
 } from '@appbaseio/reactivesearch';
 import Flex, { FlexChild } from '../styles/Flex';
 import { filtersContainer } from '../styles/Container';
-import { NearestNeighborSearch } from './NearestNeighborSearch';
+import { KNNSort } from './KNNSort';
 
 type Props = {
   currentTopics: string[],
@@ -25,6 +25,7 @@ const SearchFilters = ({ currentTopics, setTopics, visible }) => (
         dataField="languages"
         title="Language"
         placeholder="Select languages"
+        themePreset='dark'
         URLParams
         react={{ and: ['tags', 'num_pages' ] }}
       />
@@ -38,6 +39,7 @@ const SearchFilters = ({ currentTopics, setTopics, visible }) => (
         placeholder="Search tags"
         queryFormat="and"
         showCheckbox={true}
+        themePreset='dark'
         URLParams
         react={{ and: ['language', 'num_pages'] }}
       />
@@ -61,7 +63,11 @@ const SearchFilters = ({ currentTopics, setTopics, visible }) => (
         react={{ and: ['language', 'tags'] }}
       />
     </FlexChild>
-    <NearestNeighborSearch/>
+    <KNNSort
+      componentId="knn_sim"
+      showFilter={true}
+      title={'KNN'}
+      URLParams/>
   </Flex>
 );
 
