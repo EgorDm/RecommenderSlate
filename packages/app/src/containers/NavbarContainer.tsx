@@ -2,9 +2,9 @@ import { DataSearch, SelectedFilters } from "@appbaseio/reactivesearch";
 import { css } from "@emotion/css";
 import React from "react";
 import theme from "../components/theme";
-import { resultsContainer } from "../legacy/styles/Container";
+import { resultsContainer } from "../components/Container";
 import Flex, { FlexChild } from "../legacy/styles/Flex";
-import { queries } from "../legacy/styles/mediaQueries";
+import { queries } from "../components/mediaQueries";
 
 export const dataSearchContainer = css`
 	position: fixed;

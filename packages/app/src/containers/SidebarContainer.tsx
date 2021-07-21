@@ -4,13 +4,18 @@ import { Button } from "antd";
 import React from "react";
 import theme from "../components/theme";
 import useWindowDimensions from "../hooks/use-window-dimensions";
-import SearchFilters from "../legacy/components/SearchFilters";
-import { breakpoints } from "../legacy/styles/mediaQueries";
-import Navbar  from "../components/Navbar";
+import FiltersContainers from "./FiltersContainers";
+import { breakpoints, queries } from "../components/mediaQueries";
+import Sidebar  from "../components/Sidebar";
 
 export const style = css`
   .selected-filters {
-    
+    padding: 24px 16px;
+    border-bottom: 0.5px solid ${theme.colors.inputHighlightColor};
+
+    ${queries.xLarge`
+      padding: 8px 8px;
+	  `};
   }
   
   .selected-filter {
@@ -30,7 +35,7 @@ const SidebarContainer = () => {
   const isVisible = visible || width > breakpoints.xLarge;
 
   return (
-    <Navbar full={isVisible} className={style}>
+    <Sidebar full={isVisible} className={style}>
       <Button type="primary" shape="circle" size="large" onClick={toggleVisibility}  icon={
         <span className="material-icons" style={{fontSize: 24, marginTop: 8}}>filter_alt</span>
       } style={{
@@ -50,8 +55,8 @@ const SidebarContainer = () => {
         }}
         showClearAll={true}
       />
-      <SearchFilters visible={isVisible}/>
-    </Navbar>
+      <FiltersContainers visible={isVisible}/>
+    </Sidebar>
   )
 }
 

@@ -1,14 +1,13 @@
 import styled from '@emotion/styled';
 import { css } from '@emotion/css';
 
-import { queries } from '../legacy/styles/mediaQueries';
+import { queries } from './mediaQueries';
 import theme from './theme';
 
-const Navbar = styled.nav<{full: boolean}>`
+const Sidebar = styled.nav<{full: boolean}>`
 	background: ${theme.colors.surfaceColor};
 	left: 0;
 	width: 400px;
-	padding: 8px;
 	height: 100vh;
 	position: fixed;
 	z-index: 3;
@@ -22,4 +21,4 @@ const Navbar = styled.nav<{full: boolean}>`
 	`};
 `;
 
-export default Navbar;
+export default Sidebar;

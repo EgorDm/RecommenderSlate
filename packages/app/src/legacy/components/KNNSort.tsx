@@ -14,6 +14,9 @@ import {mean, divide, norm} from 'mathjs'
 
 type CommonProps = {
   title: string
+  innerClass?: {
+    title?: string;
+  }
 }
 
 type Props = React.ComponentPropsWithoutRef<typeof ReactiveComponent> & CommonProps & {}
@@ -54,7 +57,11 @@ type InnerProps = CommonProps & {
   localValue: Value,
 }
 
-const KNNSortInner = ({ setLocalValue, localValue, value, setQuery, data, ...props }: InnerProps) => {
+const KNNSortInner = ({
+  setLocalValue, localValue, value,
+  setQuery, data,
+  innerClass={}, ...props
+}: InnerProps) => {
   const [ input, setInput ] = useState<string>('')
   const loadedDocuments = data.map((item) => item._id);
 
@@ -121,7 +128,7 @@ const KNNSortInner = ({ setLocalValue, localValue, value, setQuery, data, ...pro
   const documentTitles = data.map(({ id, title }) => ({ id, title: `${id} - ${title}` }))
 
   return (<div>
-    <Title>{props.title}</Title>
+    <Title className={innerClass.title}>{props.title}</Title>
     <InputWrapper style={{
       margin: '0 0 8px',
     }}>

@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { css } from '@emotion/css';
 
-import { queries } from './mediaQueries';
+import { queries } from '../../components/mediaQueries';
 
 export const resultItemDetails = css`
 	color: #a2a2a2;
