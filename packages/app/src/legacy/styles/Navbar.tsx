@@ -22,7 +22,7 @@ const Navbar = styled.nav<{full: boolean}>`
 	background: ${theme.colors.secondaryColor};
 	left: 0;
 	width: 400px;
-	padding: 1rem;
+	padding: 8px;
 	height: 100vh;
 	position: fixed;
 	z-index: 3;
@@ -31,6 +31,7 @@ const Navbar = styled.nav<{full: boolean}>`
 		height: ${full ? '100vh' : 'auto'};
 		display: flex;
 		flex-direction: column;
+		margin-top: 50px;
 	`};
 `;
 

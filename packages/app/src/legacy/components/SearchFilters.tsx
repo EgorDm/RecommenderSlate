@@ -12,12 +12,10 @@ import { filtersContainer } from '../styles/Container';
 import { KNNSort } from './KNNSort';
 
 type Props = {
-  currentTopics: string[],
-  setTopics: (topics: string[]) => void;
   visible: boolean;
 }
 
-const SearchFilters = ({ currentTopics, setTopics, visible }) => (
+const SearchFilters = ({ visible }: Props) => (
   <Flex direction="column" hidden={!visible} className={filtersContainer}>
     <FlexChild margin="10px">
       <MultiDropdownList
@@ -72,8 +70,6 @@ const SearchFilters = ({ currentTopics, setTopics, visible }) => (
 );
 
 SearchFilters.propTypes = {
-  currentTopics: PropTypes.arrayOf(PropTypes.string),
-  setTopics: PropTypes.func,
   visible: PropTypes.bool,
 };
 

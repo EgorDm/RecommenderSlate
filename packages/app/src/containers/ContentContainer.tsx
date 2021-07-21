@@ -1,10 +1,12 @@
 import { ReactiveList, ResultCard } from "@appbaseio/reactivesearch";
 import { css } from "@emotion/css";
 import React from "react";
+import theme from "../components/theme";
 import { useReduxAction } from "../hooks";
 import Flex from "../legacy/styles/Flex";
-import { resultListContainer } from "../legacy/styles/ResultItem";
+import { queries } from "../legacy/styles/mediaQueries";
 import { KNNActions } from "../store";
+import ResultItem from "./partials/ResultItem";
 
 const renderResultStats = ({ numberOfResults, time }) => (
   <Flex justifyContent="flex-end">
@@ -12,36 +14,76 @@ const renderResultStats = ({ numberOfResults, time }) => (
   </Flex>
 );
 
-const addItemButtonStyle = css`
-	position: absolute;
-  top: 0;
-  right: 0;
-  padding: 8px;
-  font-size: 20px;
+const SORT_OPTIONS = [
+  {
+    label: 'Best Match',
+    dataField: '_score',
+    sortBy: 'desc',
+  },
+  {
+    label: 'Most Favorites',
+    dataField: 'num_favorites',
+    sortBy: 'desc',
+  },
+  {
+    label: 'Newest',
+    dataField: 'id',
+    sortBy: 'desc',
+  },
+  {
+    label: 'Oldest',
+    dataField: 'id',
+    sortBy: 'asc',
+  },
+  {
+    label: 'A to Z',
+    dataField: 'title',
+    sortBy: 'asc',
+  },
+  {
+    label: 'Z to A',
+    dataField: 'title',
+    sortBy: 'desc',
+  },
+]
+
+export const resultListContainer = css`
+  margin-top: 50px;
+  padding-top: 4px;
+
+  ${queries.xLarge`
+    margin-top: 100px;
+	`};
+
+  select {
+    border: 0;
+    outline: 0;
+    background-color: ${theme.colors.inputHighlightColor};
+    color: ${theme.colors.textColor};
+    -moz-appearance: none;
+    -webkit-appearance: none;
+  }
+  
+	.result-list-container {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+	.result-list-pagination {
+		margin: 40px 0 50px;
+
+    a[disabled] {
+      color: ${theme.colors.textColor};
+    }
+	}
+	.result-list-info {
+		margin: 1rem;
+		justify-content: space-between;
+	}
+	.powered-by {
+		display: none;
+	}
 `;
-
-const resultStyle = css`
-	position: relative;
-`;
-
-const onData = (item, addKnn: (id: number | string) => void) => (
-  <ResultCard href={item.id.toString()} className={resultStyle}>
-    <ResultCard.Image src={''}/>
-    <ResultCard.Title>
-      {item.title || ' '}
-    </ResultCard.Title>
-    <ResultCard.Description>
-      {/* <div className='result-artists'>{item.artists}</div> */}
-    </ResultCard.Description>
-    <div className={addItemButtonStyle} onClick={(e) => {
-      e.preventDefault();
-      addKnn(item.id);
-    }}>
-      <i className="fa fa-plus"/>
-    </div>
-  </ResultCard>
-);
-
 
 const ContentContainer = () => {
   const addKNNDoc = useReduxAction(KNNActions.add)
@@ -50,7 +92,7 @@ const ContentContainer = () => {
     <ReactiveList
       componentId="results"
       dataField="name"
-      renderItem={data => onData(data, addKNNDoc)}
+      renderItem={data => <ResultItem key={data.id} item={data} onActionPress={() => addKNNDoc(data.id)}/>}
       renderResultStats={renderResultStats}
       react={{
         nest: [
@@ -67,38 +109,7 @@ const ContentContainer = () => {
       }}
       className={resultListContainer}
       size={25}
-      sortOptions={[
-        {
-          label: 'Best Match',
-          dataField: '_score',
-          sortBy: 'desc',
-        },
-        {
-          label: 'Most Favorites',
-          dataField: 'num_favorites',
-          sortBy: 'desc',
-        },
-        {
-          label: 'Newest',
-          dataField: 'id',
-          sortBy: 'desc',
-        },
-        {
-          label: 'Oldest',
-          dataField: 'id',
-          sortBy: 'asc',
-        },
-        {
-          label: 'A to Z',
-          dataField: 'title',
-          sortBy: 'asc',
-        },
-        {
-          label: 'Z to A',
-          dataField: 'title',
-          sortBy: 'desc',
-        },
-      ]}
+      sortOptions={SORT_OPTIONS}
     />
   )
 }

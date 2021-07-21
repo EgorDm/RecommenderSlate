@@ -5,11 +5,13 @@ const theme = {
   colors: {
     backgroundColor: '#181a1b',
     surfaceColor: '#0c0e12',
-
+    inputColor: '#212324',
+    inputHighlightColor: '#282a2b',
 
     textColor: '#fff',
     primaryTextColor: '#fff',
-    primaryColor: '#2196F3',
+    primaryColor: '#ff415e',
+
     titleColor: '#fff',
     alertColor: '#d9534f',
     borderColor: '#666',
