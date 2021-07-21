@@ -1,7 +1,7 @@
 import { css } from '@emotion/css';
 import { css as rcss } from '@emotion/react';
 
-const breakpoints = {
+export const breakpoints = {
   small: 576,
   medium: 768,
   large: 992,

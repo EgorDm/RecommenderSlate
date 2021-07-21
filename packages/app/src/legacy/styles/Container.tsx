@@ -18,6 +18,7 @@ export const resultsContainer = css`
 `;
 
 export const filtersContainer = css`
+	display: flex!important;
 	max-height: calc(100vh - 100px);
 	overflow-y: auto;
 	height: 100%;

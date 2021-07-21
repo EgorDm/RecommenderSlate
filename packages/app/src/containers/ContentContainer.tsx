@@ -92,7 +92,7 @@ const ContentContainer = () => {
     <ReactiveList
       componentId="results"
       dataField="name"
-      renderItem={data => <ResultItem key={data.id} item={data} onActionPress={() => addKNNDoc(data.id)}/>}
+      renderItem={data => <ResultItem key={data._id} item={data} onActionPress={() => addKNNDoc(data.id)}/>}
       renderResultStats={renderResultStats}
       react={{
         nest: [
