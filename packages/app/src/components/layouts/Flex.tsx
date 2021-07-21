@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { css } from '@emotion/css';
 import { css as rcss } from '@emotion/react';
 
-import { queries } from '../../components/mediaQueries';
+import { queries } from '../mediaQueries';
 
 export const flex = css`
   display: flex;

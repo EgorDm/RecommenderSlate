@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 import { css } from '@emotion/css';
 
-import { queries } from './mediaQueries';
-import theme from './theme';
+import { queries } from '../mediaQueries';
+import theme from '../theme';
 
 const Sidebar = styled.nav<{full: boolean}>`
 	background: ${theme.colors.surfaceColor};

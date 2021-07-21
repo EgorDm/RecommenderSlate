@@ -3,7 +3,7 @@ import { css } from "@emotion/css";
 import React from "react";
 import theme from "../components/theme";
 import { useReduxAction } from "../hooks";
-import Flex from "../legacy/styles/Flex";
+import Flex from "../components/layouts/Flex";
 import { queries } from "../components/mediaQueries";
 import { KNNActions } from "../store";
 import ResultItem from "./partials/ResultItem";

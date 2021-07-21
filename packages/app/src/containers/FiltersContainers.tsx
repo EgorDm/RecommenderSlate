@@ -7,8 +7,8 @@ import {
   DynamicRangeSlider,
 } from '@appbaseio/reactivesearch';
 import theme from "../components/theme";
-import Flex, { FlexChild } from '../legacy/styles/Flex';
-import { KNNSort } from '../legacy/components/KNNSort';
+import Flex, { FlexChild } from '../components/layouts/Flex';
+import { KNNSort } from '../components/search/KNNSort';
 
 type Props = {
   visible: boolean;
@@ -26,7 +26,7 @@ export const style = css`
   }
   
   .filter-title {
-    color: ${theme.colors.textColor};
+    color: ${theme.colors.titleColor};
     font-weight: 900;
   }
   

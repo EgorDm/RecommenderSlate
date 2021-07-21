@@ -3,14 +3,11 @@ import React, { useCallback, useEffect, useState } from "react"
 import { useDeepCompareEffect } from "use-deep-compare"
 import { useReduxAction, useReduxState } from "../../hooks";
 import { KNNActions, selectKnnQueue } from "../../store";
-import { Checkbox, UL } from "../styles/Checkbox";
-import IconGroup from "../styles/IconGroup";
-import IconWrapper from "../styles/IconWrapper";
-import Input from "../styles/Input";
-import InputWrapper from "../styles/InputWrapper";
-import SearchSvg from "../styles/SearchSvg";
-import Title from "../styles/Title";
+import Title from "../Title";
 import {mean, divide, norm} from 'mathjs'
+import Search from "../inputs/Search";
+import Checkbox from "../inputs/Checkbox";
+import UL from "../layouts/UL";
 
 type CommonProps = {
   title: string
@@ -62,7 +59,6 @@ const KNNSortInner = ({
   setQuery, data,
   innerClass={}, ...props
 }: InnerProps) => {
-  const [ input, setInput ] = useState<string>('')
   const loadedDocuments = data.map((item) => item._id);
 
   const setValue = useCallback((value) => {
@@ -120,34 +116,18 @@ const KNNSortInner = ({
     </li>
   ), [value])
 
-  const onSearch = useCallback(() => {
+  const onSearch = useCallback((input) => {
     if (input && parseInt(input)) setValue([ ...(value || []), parseInt(input) ])
-    setInput('');
-  }, [ input ])
+  }, [])
 
   const documentTitles = data.map(({ id, title }) => ({ id, title: `${id} - ${title}` }))
 
   return (<div>
     <Title className={innerClass.title}>{props.title}</Title>
-    <InputWrapper style={{
-      margin: '0 0 8px',
-    }}>
-      <Input
-        onChange={(e) => setInput(e.target.value)}
-        value={input}
-        placeholder="Add item to KNN"
-        showIcon={true}
-        iconPosition={'left'}
-        aria-label={`${props.componentId}-search`}
-      />
-      <div>
-        <IconGroup groupPosition="left" positionType="absolute">
-          <IconWrapper onClick={onSearch}>
-            <SearchSvg/>
-          </IconWrapper>
-        </IconGroup>
-      </div>
-    </InputWrapper>
+    <Search
+      placeholder="Add item to KNN"
+      onSearch={onSearch} />
+
     <UL role="listbox">
       {documentTitles.map(renderItem)}
     </UL>

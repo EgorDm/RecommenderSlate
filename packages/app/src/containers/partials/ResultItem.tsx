@@ -1,6 +1,7 @@
 import { ResultCard } from "@appbaseio/reactivesearch";
 import { css } from "@emotion/css";
 import * as React from "react";
+import { queries } from "../../components/mediaQueries";
 import theme from "../../components/theme";
 import { Result } from "../../types";
 
@@ -15,6 +16,15 @@ const resultStyle = css`
   max-width: 220px!important;
   height: 342px!important;
   background-color: ${theme.colors.surfaceColor}!important;
+  border: none!important;
+
+  ${queries.small`
+    margin: 4px 4px!important;
+    
+    min-width: 160px!important;
+    max-width: 180px!important;
+    height: 300px!important;
+  `};
 
   .item-action-button {
     position: absolute;

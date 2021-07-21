@@ -2,8 +2,8 @@ import { DataSearch, SelectedFilters } from "@appbaseio/reactivesearch";
 import { css } from "@emotion/css";
 import React from "react";
 import theme from "../components/theme";
-import { resultsContainer } from "../components/Container";
-import Flex, { FlexChild } from "../legacy/styles/Flex";
+import { resultsContainer } from "../components/layouts/Container";
+import Flex, { FlexChild } from "../components/layouts/Flex";
 import { queries } from "../components/mediaQueries";
 
 export const dataSearchContainer = css`

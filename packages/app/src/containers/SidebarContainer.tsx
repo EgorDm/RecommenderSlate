@@ -6,7 +6,7 @@ import theme from "../components/theme";
 import useWindowDimensions from "../hooks/use-window-dimensions";
 import FiltersContainers from "./FiltersContainers";
 import { breakpoints, queries } from "../components/mediaQueries";
-import Sidebar  from "../components/Sidebar";
+import Sidebar  from "../components/layouts/Sidebar";
 
 export const style = css`
   .selected-filters {

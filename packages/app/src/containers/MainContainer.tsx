@@ -1,7 +1,7 @@
 import { css } from "@emotion/css";
 import React from 'react';
 import theme from "../components/theme";
-import Flex, { FlexChild } from "../legacy/styles/Flex";
+import Flex, { FlexChild } from "../components/layouts/Flex";
 import { queries } from "../components/mediaQueries";
 import ContentContainer from "./ContentContainer";
 import NavbarContainer from "./NavbarContainer";
