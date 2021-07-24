@@ -5,6 +5,7 @@ import theme from "../components/theme";
 import { resultsContainer } from "../components/layouts/Container";
 import Flex, { FlexChild } from "../components/layouts/Flex";
 import { queries } from "../components/mediaQueries";
+import { useElasticSchema } from "../hooks";
 
 export const dataSearchContainer = css`
 	position: fixed;
@@ -29,25 +30,30 @@ export const dataSearchContainer = css`
 
 
 
-const NavbarContainer = () => (
-  <Flex direction="column">
-    <FlexChild>
-      <DataSearch
-        componentId="query"
-        dataField={[ 'title', 'languages', 'tags', 'artists', 'groups', 'num_pages' ]}
-        placeholder="Search Documents"
-        iconPosition="left"
-        autosuggest={false}
-        URLParams
-        className={dataSearchContainer}
-        innerClass={{
-          input: 'search-input',
-        }}
-      />
-    </FlexChild>
-    <FlexChild>
-    </FlexChild>
-  </Flex>
-)
+const NavbarContainer = () => {
+  const {data: schema} = useElasticSchema()
+  const fields = schema?.map(meta => meta.field) || [];
+
+  return (
+    <Flex direction="column">
+      <FlexChild>
+        <DataSearch
+          componentId="query"
+          dataField={[ 'title', ...fields ]}
+          placeholder="Search Documents"
+          iconPosition="left"
+          autosuggest={false}
+          URLParams
+          className={dataSearchContainer}
+          innerClass={{
+            input: 'search-input',
+          }}
+        />
+      </FlexChild>
+      <FlexChild>
+      </FlexChild>
+    </Flex>
+  )
+}
 
 export default NavbarContainer;

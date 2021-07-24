@@ -13,7 +13,8 @@ type CommonProps = {
   title: string
   innerClass?: {
     title?: string;
-  }
+  },
+  dataField: string;
 }
 
 type Props = React.ComponentPropsWithoutRef<typeof ReactiveComponent> & CommonProps & {}
@@ -55,7 +56,7 @@ type InnerProps = CommonProps & {
 }
 
 const KNNSortInner = ({
-  setLocalValue, localValue, value,
+  setLocalValue, localValue, value,dataField,
   setQuery, data,
   innerClass={}, ...props
 }: InnerProps) => {
@@ -93,9 +94,9 @@ const KNNSortInner = ({
             lang: "knn",
             source: "knn_score",
             params: {
-              field: "topics",
+              field: dataField,
               query_value: topic,
-              space_type: "l2"
+              space_type: "cosinesimil"
             }
           }
         }

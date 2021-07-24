@@ -5,10 +5,14 @@ import {
   MultiDropdownList,
   MultiList,
   DynamicRangeSlider,
+  ReactiveComponent,
 } from '@appbaseio/reactivesearch';
 import theme from "../components/theme";
 import Flex, { FlexChild } from '../components/layouts/Flex';
 import { KNNSort } from '../components/search/KNNSort';
+import { useElasticSchema } from "../hooks";
+import Filter from "./partials/Filter";
+import { useDeepCompareMemo } from "use-deep-compare"
 
 type Props = {
   visible: boolean;
@@ -88,77 +92,22 @@ export const style = css`
   }
 `
 
-const FiltersContainers = ({ visible }: Props) => (
-  <Flex direction="column" hidden={!visible} className={style}>
-    <FlexChild className='filter-wrapper'>
-      <MultiDropdownList
-        componentId="languages"
-        dataField="languages"
-        title="Language"
-        placeholder="Select languages"
-        themePreset='dark'
-        innerClass={{
-          title: 'filter-title',
-          select: 'filter-select',
-          list: 'filter-list'
-        }}
-        URLParams
-        react={{ and: [ 'tags', 'num_pages' ] }}
-      />
+const FiltersContainers = ({ visible }: Props) => {
+  const {data: schema} = useElasticSchema()
+  const fields = schema?.filter(meta => meta.type !== 'knn').map(meta => meta.field) || [];
+
+  const filters = useDeepCompareMemo(() => schema?.map((meta, i) => (
+    <FlexChild key={i} className='filter-wrapper'>
+      <Filter meta={meta} react={fields}/>
     </FlexChild>
-    <FlexChild className='filter-wrapper'>
-      <MultiList
-        componentId="tags"
-        dataField="tags"
-        title="Tags"
-        size={1000}
-        placeholder="Search tags"
-        queryFormat="and"
-        showCheckbox={true}
-        themePreset='dark'
-        innerClass={{
-          title: 'filter-title',
-          input: 'filter-input',
-          checkbox: 'filter-checkbox',
-          label: 'filter-checkbox-label',
-        }}
-        URLParams
-        react={{ and: [ 'language', 'num_pages' ] }}
-      />
-    </FlexChild>
-    <FlexChild className='filter-wrapper'>
-      <DynamicRangeSlider
-        componentId="num_pages"
-        title="Page Count"
-        dataField="num_pages"
-        innerClass={{
-          label: 'range-label',
-          title: 'filter-title',
-          slider: 'filter-slider'
-        }}
-        rangeLabels={(min, max) => ({
-          start: min + ' page',
-          end: max + ' pages',
-        })}
-        stepValue={1}
-        showHistogram={false}
-        showFilter={true}
-        URLParams
-        react={{ and: [ 'language', 'tags' ] }}
-      />
-    </FlexChild>
-    <FlexChild className='filter-wrapper'>
-      <KNNSort
-        componentId="knn_sim"
-        showFilter={true}
-        title={'KNN'}
-        innerClass={{
-          title: 'filter-title'
-        }}
-        URLParams/>
-    </FlexChild>
-  </Flex>
-);
+  )), [schema || []])
+
+  return (
+    <Flex direction="column" hidden={!visible} className={style}>
+      {filters}
+    </Flex>
+  );
+}
 
 FiltersContainers.propTypes = {
   visible: PropTypes.bool,

@@ -2,7 +2,7 @@ import { ReactiveList, ResultCard } from "@appbaseio/reactivesearch";
 import { css } from "@emotion/css";
 import React from "react";
 import theme from "../components/theme";
-import { useReduxAction } from "../hooks";
+import { useElasticSchema, useReduxAction } from "../hooks";
 import Flex from "../components/layouts/Flex";
 import { queries } from "../components/mediaQueries";
 import { KNNActions } from "../store";
@@ -87,6 +87,9 @@ export const resultListContainer = css`
 
 const ContentContainer = () => {
   const addKNNDoc = useReduxAction(KNNActions.add)
+  const {data: schema} = useElasticSchema()
+  const fields = schema?.filter(meta => meta.type !== 'knn').map(meta => meta.field) || [];
+  const knn_field = schema?.filter(meta => meta.type === 'knn').map(meta => meta.field) || [];
 
   return (
     <ReactiveList
@@ -94,10 +97,10 @@ const ContentContainer = () => {
       dataField="name"
       renderItem={data => <ResultItem key={data._id} item={data} onActionPress={() => addKNNDoc(data.id)}/>}
       renderResultStats={renderResultStats}
-      react={{
+      react={knn_field && {
         nest: [
-          'knn_sim',
-          {and: [ 'title', 'languages', 'tags', 'artists', 'groups', 'num_pages' ]},
+          knn_field[0] || '',
+          {and: [ ...fields ]},
         ],
       } as any}
       pagination

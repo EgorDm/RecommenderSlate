@@ -38,6 +38,11 @@ const resultStyle = css`
     background-color: ${theme.colors.surfaceColor};
   }
   
+  .item-image-alternative {
+    position: absolute;
+    background-color: transparent;
+  }
+  
   .item-title {
     padding: 0;
     margin-top: 4px;
@@ -49,7 +54,12 @@ const ResultItem = ({
   ...props
 }: Props) => (
   <ResultCard href={item.id.toString()} className={resultStyle} {...props}>
-    <ResultCard.Image className='item-image' src={''}/>
+    <ResultCard.Image className='item-image' src={item.image}/>
+    <ResultCard.Image className='item-image item-image-alternative' src={
+      item.image.includes('jpg')
+        ? item.image.replace('jpg', 'png')
+        : item.image.replace('png', 'jpg')
+    } />
     <ResultCard.Title className='item-title'>{item.title}</ResultCard.Title>
     <div className='item-action-button' onClick={(e) => {
       e.preventDefault();
