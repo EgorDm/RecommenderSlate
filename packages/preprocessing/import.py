@@ -39,15 +39,16 @@ df = pd.read_parquet(config.input_dataset)
 df = df[df['terms'].notnull() & df['terms'].str.len() > 0]
 df.reset_index(inplace=True)
 
-print('Extracting words and converting dataset to bow')
-tags = set(it.chain.from_iterable(df['terms']))
-id2word = corpora.Dictionary([tags])
-corpus = [id2word.doc2bow(tags) for i, tags in df['terms'].iteritems()]
+
 
 print('Loading existing model')
 lda_model = gensim.models.LdaMulticore.load(
     os.path.join('models', config.input_model, f'lda_ntopics_{config.n_topics}')
 )
+
+print('Extracting words and converting dataset to bow')
+id2word = lda_model.id2word
+corpus = [id2word.doc2bow(tags) for i, tags in df['terms'].iteritems()]
 
 print('Transforming documents')
 doc_lda = lda_model.get_document_topics(corpus, 0.)
@@ -56,9 +57,12 @@ topic_data = np.array(doc_lda)[:, :, 1]
 print('Transforming pandas dataset')
 documents = df.copy()
 documents['topics'] = topic_data.tolist()
-for col in ['terms', 'tags', 'artists', 'groups']:
-    print(col)
-    documents[col] = documents[col].map(lambda x: x.tolist())
+
+example = documents.iloc[0]
+for col in documents.columns:
+    if isinstance(example[col], np.ndarray):
+        print(f'Converting column {col} to list')
+        documents[col] = documents[col].map(lambda x: x.tolist())
 
 print('Building elasticsearch index')
 es = Elasticsearch(hosts=['localhost:9200'], http_compress=True, timeout=30)

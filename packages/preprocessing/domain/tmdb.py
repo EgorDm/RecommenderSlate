@@ -3,7 +3,7 @@ import pyspark.sql.types as T
 from pyspark.sql import SparkSession
 
 spark = SparkSession.builder \
-    .appName("nh-prepare") \
+    .appName("data-prepare") \
     .config("spark.driver.memory", "5g") \
     .config("spark.executor.memory", "5g") \
     .config("spark.storage.memoryFraction", "0") \
@@ -13,6 +13,7 @@ spark = SparkSession.builder \
 
 # Constants
 POSTER_URL = 'https://www.themoviedb.org/t/p/w300_and_h450_bestv2'
+URL = 'https://www.themoviedb.org/%s/%d'
 
 # Input dataset schema
 schema_genres = T.ArrayType(T.StructType([
@@ -69,6 +70,10 @@ schema_movie = T.StructType([
     T.StructField('status', T.StringType(), True),
     T.StructField('poster_path', T.StringType(), True),
 
+    T.StructField('popularity', T.FloatType(), True),
+    T.StructField('vote_average', T.FloatType(), True),
+    T.StructField('vote_count', T.IntegerType(), True),
+
     T.StructField('genres', schema_genres, True),
     T.StructField('production_companies', schema_prod_companies, True),
     T.StructField('credits', schema_credits, True),
@@ -89,6 +94,10 @@ schema_serie = T.StructType([
     T.StructField('first_air_date', T.DateType(), True),
     T.StructField('status', T.StringType(), True),
     T.StructField('type', T.StringType(), True),
+
+    T.StructField('popularity', T.FloatType(), True),
+    T.StructField('vote_average', T.FloatType(), True),
+    T.StructField('vote_count', T.IntegerType(), True),
 
     T.StructField('seasons', T.ArrayType(T.StructType([
         T.StructField('adult', T.BooleanType(), True),
@@ -115,18 +124,21 @@ df_movie = (spark.read.json('./data/tmdb_raw/movie/*.json', schema=schema_movie)
     .filter('adult == false')
     .select([
         F.col('id'), F.col('imdb_id'),
+        F.col('popularity'), F.col('vote_average'), F.col('vote_count'),
         F.lit('MOVIE').alias('document_type'),
         F.col('title'), F.col('original_language'), F.col('overview'),
         F.col('release_date').alias('release_date_start'),
         F.col('release_date').alias('release_date_end'),
         F.col('status'), F.lit('movie').alias('media_type'),
         F.format_string(f'{POSTER_URL}%s', F.col('poster_path')).alias('image'),
+        F.format_string(URL, F.lit('movie'), F.col('id')).alias('url'),
         F.col('genres'), F.col('production_companies'), F.col('credits'),
         F.col('lists'), F.col('keywords.keywords').alias('keywords'),
     ]))
 
 df_serie = (spark.read.json('./data/tmdb_raw/serie/*.json', schema=schema_serie).select([
     F.col('id'), F.col('imdb_id'),
+    F.col('popularity'), F.col('vote_average'), F.col('vote_count'),
     F.lit('SERIE').alias('document_type'),
     F.col('name').alias('title'), F.col('original_language'), F.col('overview'),
     F.col('first_air_date').alias('release_date_start'),
@@ -138,6 +150,7 @@ df_serie = (spark.read.json('./data/tmdb_raw/serie/*.json', schema=schema_serie)
         f'{POSTER_URL}%s',
         F.expr('element_at(transform(seasons, s -> s.poster_path), 1)')
     ).alias('image'),
+    F.format_string(URL, F.lit('tv'), F.col('id')).alias('url'),
 
     F.col('genres'), F.col('production_companies'), F.col('credits'),
     F.col('lists'), F.col('keywords.results').alias('keywords'),
@@ -145,6 +158,7 @@ df_serie = (spark.read.json('./data/tmdb_raw/serie/*.json', schema=schema_serie)
 
 df = (df_movie.union(df_serie).select([
     F.col('id'), F.col('imdb_id'), F.col('document_type'),
+    F.col('popularity'), F.col('vote_average'), F.col('vote_count'),
     F.col('title'), F.col('original_language').alias('language'), F.col('overview'),
     F.col('release_date_start'), F.col('release_date_end'),
     F.col('status'), F.col('media_type'), F.col('image'),
@@ -166,14 +180,12 @@ df = (df_movie.union(df_serie).select([
     array_union(genres,
         array_union(production_companies, 
             array_union(keywords, 
-                array_union(top_actors, 
-                    array_union(directors,
-                        array_union(producers, writers))
-                )
+                array_union(directors,
+                    array_union(producers, writers))
             )
         )
     )
 ''')))
 
 out_df = df.toPandas()
-out_df.to_parquet('data/tmdb.parquet')
+out_df.to_parquet('data/tmdb2.parquet')
