@@ -100,7 +100,7 @@ const ContentContainer = () => {
       react={knn_field && {
         nest: [
           knn_field[0] || '',
-          {and: [ ...fields ]},
+          {and: [ ...fields, 'query' ]},
         ],
       } as any}
       pagination

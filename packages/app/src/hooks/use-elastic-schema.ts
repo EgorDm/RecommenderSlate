@@ -7,10 +7,17 @@ export interface MetaField {
   type: null | 'multilist-dropdown' | 'multilist' | 'knn' | 'dynamic-range'
 }
 
+export function getElasticIndex() {
+ const path = window.location.pathname.replace('/', '');
+ const index = path.length > 0 ? path : (process.env.REACT_APP_ES_INDEX as string);
+ return index;
+}
+
 export function useElasticSchema() {
   return useQuery<MetaField[]>('schema', async () => {
-    const response = await axios.get(`${process.env.REACT_APP_ES_HOST as string}${process.env.REACT_APP_ES_INDEX as string}`);
-    const mapping = response.data[process.env.REACT_APP_ES_INDEX as string].mappings;
+    const index = getElasticIndex();
+    const response = await axios.get(`${process.env.REACT_APP_ES_HOST as string}${index}`);
+    const mapping = response.data[index].mappings;
     return mapping?._meta.field_order.filter(item => !!item.type);
   })
 }

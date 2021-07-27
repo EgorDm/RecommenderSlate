@@ -32,14 +32,14 @@ export const dataSearchContainer = css`
 
 const NavbarContainer = () => {
   const {data: schema} = useElasticSchema()
-  const fields = schema?.map(meta => meta.field) || [];
+  const fields = schema?.filter(meta => meta.type !== 'knn').filter(meta => meta.type !== 'dynamic-range').map(meta => meta.field) || [];
 
   return (
     <Flex direction="column">
       <FlexChild>
         <DataSearch
           componentId="query"
-          dataField={[ 'title', ...fields ]}
+          dataField={[ 'title' ]}
           placeholder="Search Documents"
           iconPosition="left"
           autosuggest={false}
