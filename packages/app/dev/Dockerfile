@@ -6,5 +6,4 @@ COPY . /app/public
 WORKDIR /app
 EXPOSE 80
 
-ENV PORT=80
-CMD ["serve", "--single", "public"]
+CMD ["serve", "--single", "-l", "tcp://0.0.0.0:80", "public"]

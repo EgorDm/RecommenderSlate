@@ -2,7 +2,7 @@ version: '3.7'
 services:
   app:
     build: .
-    container_name:
+    container_name: toprec
     ports:
       - "5335:80"
     depends_on:

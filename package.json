@@ -8,7 +8,8 @@
     "postinstall": "patch-package && syncpack format && syncpack set-semver-ranges",
     "watch": "concurrently \"npm:watch:app\" \"npm:watch:libs\"",
     "watch:app": "yarn workspace @toprec/app start",
-    "watch:libs": "yarn workspace @appbaseio/reactivecore start"
+    "watch:libs": "yarn workspace @appbaseio/reactivecore start",
+    "build": "yarn workspace @toprec/app build"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "4.28.2",
