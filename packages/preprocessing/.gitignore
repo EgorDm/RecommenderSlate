@@ -1,3 +1,4 @@
 domain/*
 !domain/.gitkeep
+!domain/tmdb.py
 preprocess.ipynb
