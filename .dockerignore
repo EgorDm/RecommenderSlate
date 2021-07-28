@@ -7,3 +7,6 @@ data
 packages/app/node_modules
 packages/preprocessing
 .yarn
+
+packages/app/.env
+packages/app/.env.example
