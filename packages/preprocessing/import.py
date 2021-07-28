@@ -65,7 +65,7 @@ for col in documents.columns:
         documents[col] = documents[col].map(lambda x: x.tolist())
 
 print('Building elasticsearch index')
-es = Elasticsearch(hosts=['localhost:9200'], http_compress=True, timeout=30)
+es = Elasticsearch(hosts=['nas:9200'], http_compress=True, timeout=30)
 mapping = json.loads(open(config.index_mapping, 'r').read())
 mapping['settings'] = {"index.knn": True}
 mapping['mappings']['properties']['terms'] = {"type": "keyword"}

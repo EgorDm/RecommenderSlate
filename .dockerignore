@@ -1,0 +1,9 @@
+node_modules
+dev
+libs/reactivecore/lib
+libs/reactivecore/node_modules
+models
+data
+packages/app/node_modules
+packages/preprocessing
+.yarn
