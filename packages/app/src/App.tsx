@@ -6,8 +6,8 @@ import MainContainer from "./containers/MainContainer";
 import store from "./store/store";
 import theme from './components/theme';
 import {getElasticIndex} from './hooks/use-elastic-schema';
+import 'antd/dist/antd.css';
 import {QueryClient, QueryClientProvider} from 'react-query'
-import './App.less';
 
 const queryClient = new QueryClient()
 
