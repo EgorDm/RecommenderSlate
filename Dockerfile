@@ -13,6 +13,8 @@ RUN yarn install
 
 ENV DISABLE_ESLINT_PLUGIN=true
 ENV SKIP_PREFLIGHT_CHECK=true
+ENV REACT_APP_ES_INDEX=tmdb
+ENV REACT_APP_ES_HOST=http://localhost:9200/
 COPY tsconfig.json /app/tsconfig.json
 COPY packages/app /app/packages/app
 RUN yarn build
