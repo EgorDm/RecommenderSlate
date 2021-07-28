@@ -46,6 +46,8 @@ const SidebarContainer = () => {
         width: 50,
         height: 50,
         border: 0,
+        backgroundColor: theme.colors.primaryColor,
+        color: theme.colors.primaryTextColor
       }}/>
 
       <SelectedFilters

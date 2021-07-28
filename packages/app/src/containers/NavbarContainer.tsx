@@ -15,6 +15,7 @@ export const dataSearchContainer = css`
 		height: 50px;
 		border: none;
 		background-color: ${theme.colors.inputColor};
+    color: ${theme.colors.textColor};
 		transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 		&:focus {
       background-color: ${theme.colors.inputHighlightColor};

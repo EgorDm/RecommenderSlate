@@ -19,7 +19,7 @@ type Props = {
 }
 
 export const style = css`
-  display: flex!important;
+  display: flex;
   max-height: calc(100vh - 84px);
   overflow-y: auto;
   height: 100%;
