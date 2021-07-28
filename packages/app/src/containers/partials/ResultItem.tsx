@@ -53,7 +53,7 @@ const ResultItem = ({
   item, onActionPress,
   ...props
 }: Props) => (
-  <ResultCard href={item.id.toString()} className={resultStyle} {...props}>
+  <ResultCard href={item.url?.toString()} className={resultStyle} {...props}>
     <ResultCard.Image className='item-image' src={item.image}/>
     <ResultCard.Image className='item-image item-image-alternative' src={
       item.image.includes('jpg')

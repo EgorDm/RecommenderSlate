@@ -4,5 +4,6 @@ export type Image = URL;
 export interface Result {
   id: number,
   title: string,
-  image: Image
+  image: Image,
+  url?: string,
 }
