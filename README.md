@@ -9,7 +9,7 @@
 <!-- markdownlint-enable -->
 
 ## Preview
-![](https://github.com/EgorDm/RecommenderSlate/blob/master/assets/preview/demo.png?raw=true)
+![](https://github.com/EgorDm/RecommenderSlate/blob/master/assets/demo.png?raw=true)
 
 ## Features
 * Out of the box document embedding based on clustering
